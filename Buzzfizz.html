@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FizzBuzz</title>
+    <style>
+        body{
+            background-color:cornsilk;
+        }
+        #main{
+            margin-left: 35rem;
+            width: 50vw;
+        }
+        h1{
+            text-align: center;
+            margin-top: 5rem;
+            color: red;
+        }
+        input{
+            width: 15vw;
+            height: 15vh;
+            color:blue;
+            background-color:cornsilk;
+            font-size: large;
+            font-weight: bolder;
+            border: 10px solid black;
+            text-align: center;
+        }
+        button{
+            background-color: rgb(223, 16, 85);
+            width: 15vw;
+            height: 15vh;
+            color:white;
+            font-weight: bolder;
+            height:10vh;
+            border: 2px solid brown;
+            margin-left: 1rem;
+            border-radius: 50%;
+        }
+        button:hover{
+            border-radius:0%;
+        }
+        #result{
+            font-weight: bolder;
+            font-size:xx-large;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>FizzBuzz</h1>
+    <div id="main"> 
+    <input type="number" aria-label="number" value="" id="b1" placeholder="Enter number"/><br />
+    <br>
+    <button onclick="fizzbuzz()" id="i1">Find FizzBuzz</button>
+</div>
+<p id="result"></p>
+
+    <script>
+        function fizzbuzz(){
+            let n = document.getElementById("b1").value;
+            if(n == "")
+                alert("enter n numbers to generate FizzBuzz series")
+                else
+            for(i=1; i<=n; i++){
+                var li_ref = document.createElement("LI");
+                li_ref.innerText = i;
+                if(i%3 == 0 && i%5 == 0)
+                li_ref.innerText = "FizzBuzz";
+                else if(i%3 == 0)
+                li_ref.innerText = "Fizz";
+                else if (i%5 == 0)
+                li_ref.innerText = "Buzz";
+                else
+                li_ref.innerText = i;
+                let result_ref = document.getElementById("result");
+                result_ref.appendChild(li_ref);
+            }   
+        }
+    </script>
+    
+</body>
+</html>
