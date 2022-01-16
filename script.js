@@ -1,187 +1,35 @@
-// const add_btn = document.querySelector('.add-btn')
-// const model = document.querySelector('.modal')
-// const hide_modal = document.querySelector('.hide-modal-btn')
-// const book_title= document.querySelector('.book-title')
-// const add_book_btn=document.querySelector('.add-book-btn')
-// const container = document.querySelector('.container')
-// let delete_keys = document.querySelectorAll('.cross-btn')
-// const id_value=1
+const inputTxt = document.querySelector('.inputTxt');
+var button = document.querySelector('.btn');
+const showData = document.querySelector('.showData');
 
+//Get API Key By Login To OpenWeather.org
+const API_Key = "a0e78d3b449db7059df0a38abd3952f8";
 
-// delete_keys.forEach((key)=>{
-//     console.log("hi")
-// })
+//Now Add Event Listener
+button.addEventListener('click', () => {
 
-// const deleteBook =(event)=>{
-//     // console.log(event.target.classList[0])
-//     console.log(event.srcElement.id)
-//     console.log("clicked")
-// }
+    //Get Input Value
+    const cityInput = inputTxt.value;
+    // console.log(cityInput);
 
+    //Now Fetch Through Get API 
+    fetch(`http://api.openweathermap.org/data/2.5/weather?q=${cityInput}&units=metric&APPID=${API_Key}`)
+        .then(res => res.json())
+        .then(data => {
+            // console.log(data);
 
-// let books=[]
-// const showModal =()=>{
-//      model.classList.add('show-modal')  
-// }
-// const hideModal =()=>{
-//     model.classList.remove('show-modal')
-// }
-// const BuildUi =(books)=>{
-//     books.forEach((book)=>{
-//         const book_ctn = document.createElement('div')
-//         book_ctn.classList.add('book')
-//         const book_name = document.createElement('h2')
-//         book_name.classList.add("book-name")
-//         book_name.innerText=book.title
+            //When Fill Input Field Then Clear Input Field
+            inputTxt.value = " ";
 
-//         const icon = document.createElement('img')
-//         icon.classList.add("cross-btn")
+            //Now Show All Data Value
+            showData.innerHTML = `
+                                <ul>
+                                    <li class="desc">${data.weather[0].description}</li>
+                                    <li class="city">${data.name}</li>
+                                    <li class="temp">${data.main.temp}°c</li>
+                                </ul>
+                                `; 
 
-//         icon.setAttribute('id',"ones")
-//         icon.setAttribute('src',"cross.png")
-//         book_ctn.append(book_name,icon)
-//         container.append(book_ctn)
-//     })
-//     delete_keys = document.querySelectorAll('.cross-btn')
-//     delete_keys.forEach((key)=>{
-//         key.addEventListener('click',deleteBook)
-//     })
-// }
-// const setBooks =()=>{
-//     if(localStorage.getItem("books")){
-//         books = JSON.parse(localStorage.getItem("books"))
-//     }else{
-//         const test={
-//             title:"Manual"
-//         }
-//         books.push(test)
-//     }
-//     BuildUi(books)
-// }
-// const fetchBookTitle =(event)=>{
-//     const book ={
-//         title:book_title.value
-//     }
-//     books.push(book)
-//     localStorage.setItem("books",JSON.stringify(books))
-//     console.log(localStorage.getItem("books"))
-//     book_title.value=""  
-// }
+        });
 
-
-// add_book_btn.addEventListener('click',fetchBookTitle)
-// hide_modal.addEventListener('click',hideModal)
-// add_btn.addEventListener('click',showModal)
-
-
-// setBooks() 
-
-
-const add_btn = document.querySelector('.add-btn')
-const model = document.querySelector('.modal')
-const hide_modal = document.querySelector('.hide-modal-btn')
-const book_title= document.querySelector('.book-title')
-const add_book_btn=document.querySelector('.add-book-btn')
-const container = document.querySelector('.container')
-let delete_keys = document.querySelectorAll('.cross-btn')
-const id_value=1
-
-
-delete_keys.forEach((key)=>{
-    console.log("hi")
-})
-
-const delete_book_from_local= (bname) =>{
-
-   localStorage.getItem("books")
-   books = JSON.parse(localStorage.getItem("books1"));
-   for(i=0;i<books.length;i++){
-       if(books[i].title==bname){
-           books.pop(books[i]);
-           localStorage.setItem("books1",JSON.stringify(books))
-            console.log(localStorage.getItem("books1"))
-
-       }
-
-   }
-   
-
-   
-
-
-}
-const deleteBook =(event)=>{
-    // console.log(event.target.classList[0])
-    console.log(event.srcElement.id)
-    let id= event.srcElement.id;
-    let inner=document.getElementById(id);
-    let bname=inner.parentNode.querySelector('.book-name').textContent;
-    delete_book_from_local(bname);
-
-  
-
-    inner.parentNode.parentNode.removeChild(inner.parentNode);
-    
-    
-
-    console.log("clicked")
-}
-
-
-let books=[]
-const showModal =()=>{
-     model.classList.add('show-modal')  
-}
-const hideModal =()=>{
-    model.classList.remove('show-modal')
-}
-const BuildUi =(books)=>{
-    books.forEach((book)=>{
-        const book_ctn = document.createElement('div')
-        book_ctn.classList.add('book')
-        const book_name = document.createElement('h2')
-        book_name.classList.add("book-name")
-        book_name.innerText=book.title
-
-        const icon = document.createElement('img')
-        icon.classList.add("cross-btn")
-
-        icon.setAttribute('id',Math.floor(Math.random() * 100) + 1)
-        icon.setAttribute('src',"cross.png")
-        book_ctn.append(book_name,icon)
-        container.append(book_ctn)
-    })
-    delete_keys = document.querySelectorAll('.cross-btn')
-    delete_keys.forEach((key)=>{
-        key.addEventListener('click',deleteBook)
-
-    })
-}
-const setBooks =()=>{
-    if(localStorage.getItem("books1")){
-        books = JSON.parse(localStorage.getItem("books1"))
-    }else{
-        const test={
-            title:"Manual"
-        }
-        books.push(test)
-    }
-    BuildUi(books)
-}
-const fetchBookTitle =(event)=>{
-    const book ={
-        title:book_title.value
-    }
-    books.push(book)
-    localStorage.setItem("books1",JSON.stringify(books))
-    console.log(localStorage.getItem("books1"))
-    book_title.value=""  
-}
-
-
-add_book_btn.addEventListener('click',fetchBookTitle)
-hide_modal.addEventListener('click',hideModal)
-add_btn.addEventListener('click',showModal)
-
-
-setBooks()
+});
